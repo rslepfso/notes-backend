@@ -7,7 +7,7 @@ if (process.argv.length < 3) {
 
 const password = process.argv[2];
 
-const url = `mongodb+srv://rslepfso:${password}@cluster0.tojczn2.mongodb.net/notes?retryWrites=true&w=majority`;
+const url = `mongodb+srv://rslepfso:${password}@cluster0.tojczn2.mongodb.net/notesTest?retryWrites=true&w=majority`;
 
 mongoose.set("strictQuery", false);
 mongoose.connect(url);
@@ -29,10 +29,10 @@ const Note = mongoose.model("Note", noteSchema);
 //   important: false,
 // });
 
-// const note3 = new Note({
-//   content: "GET and POST are the most important methods of HTTP protocol",
-//   important: true,
-// });
+const note3 = new Note({
+  content: "GET and POST are the most important methods of HTTP protocol",
+  important: true,
+});
 
 // note.save().then((result) => {
 //   console.log("Note saved");
@@ -40,15 +40,17 @@ const Note = mongoose.model("Note", noteSchema);
 
 // note2.save().then((result) => {
 //   console.log("Note saved");
+//   mongoose.connection.close();
 // });
 
-// note3.save().then((result) => {
-//   console.log("Note saved");
-// });
-
-Note.find({}).then((result) => {
-  result.forEach((note) => {
-    console.log(note);
-  });
+note3.save().then((result) => {
+  console.log("Note saved");
   mongoose.connection.close();
 });
+
+// Note.find({}).then((result) => {
+//   result.forEach((note) => {
+//     console.log(note);
+//   });
+//   mongoose.connection.close();
+// });

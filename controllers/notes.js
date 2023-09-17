@@ -4,10 +4,9 @@ const Note = require("../models/note");
 // ROUTE HANDLERS
 
 // Get all notes
-notesRouter.get("/", (request, response) => {
-  Note.find({}).then((result) => {
-    response.json(result);
-  });
+notesRouter.get("/", async (request, response) => {
+  const notes = await Note.find({});
+  response.json(notes);
 });
 
 // Get single note
@@ -35,7 +34,7 @@ notesRouter.delete("/:id", (request, response, next) => {
 });
 
 // Create new note
-notesRouter.post("/", (request, response, next) => {
+notesRouter.post("/", async (request, response, next) => {
   const body = request.body;
 
   if (!body.content) {
@@ -47,10 +46,8 @@ notesRouter.post("/", (request, response, next) => {
     important: body.important || false,
   });
 
-  note
-    .save()
-    .then((result) => response.json(result))
-    .catch((error) => next(error));
+  const savedNote = await note.save();
+  response.status(201).json(savedNote);
 });
 
 // Update note
