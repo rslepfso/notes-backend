@@ -10,27 +10,19 @@ notesRouter.get("/", async (request, response) => {
 });
 
 // Get single note
-notesRouter.get("/:id", (request, response, next) => {
-  Note.findById(request.params.id)
-    .then((result) => {
-      if (result) {
-        response.json(result);
-      } else {
-        response.status(404).end();
-      }
-    })
-    .catch((error) => {
-      next(error);
-    });
+notesRouter.get("/:id", async (request, response, next) => {
+  const note = await Note.findById(request.params.id);
+  if (note) {
+    response.json(note);
+  } else {
+    response.status(404).end();
+  }
 });
 
 // Delete note
-notesRouter.delete("/:id", (request, response, next) => {
-  Note.findByIdAndRemove(request.params.id)
-    .then((result) => {
-      response.status(204).end();
-    })
-    .catch((error) => next(error));
+notesRouter.delete("/:id", async (request, response, next) => {
+  await Note.findByIdAndRemove(request.params.id);
+  response.status(204).end();
 });
 
 // Create new note
