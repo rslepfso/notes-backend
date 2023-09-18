@@ -6,8 +6,9 @@ POST http://localhost:3001/api/notes
 Content-Type: application/json
 
 {
-  "content": "Everything works",
-  "important": true
+  "content": "User id of the note creator",
+  "important": true,
+  "userId": "650847cce7ab74f8e23800ac"
 }
 
 ###
@@ -23,3 +24,4 @@ Content-Type: application/json
   "content": "Everything works",
   "important": false
 }
+
